@@ -14,4 +14,5 @@ e. Redo the assignment of the image fading assignment in JavaScript course, usin
 f. Redo the tiger assignment in JavaScript course, and make it moves gradually (walks) to the end of the page left when it clicked, and disappears when it reaches to the end of the page (left=0) using callback function, using JQuery (remove any DHTML code on the assignment and use JQuery only[use animate() function]).
 ## 1.	Redo Ajax assignment in Javascript course and use JQuery and  JQuery AJAX to retrieve user data, and display: First Name, Last name and user avatar image from the following test web service: https://reqres.in/api/users/1:
 a.	Make a textbox where the user can enter user ID, and press display and then display the user with the given ID.
+
 b.	Use this API web service: https://reqres.in/api/users to display all users returning from it. (Loop on them and display all users).
