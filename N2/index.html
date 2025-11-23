@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assignment (2)</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <input type="number" id="userId" placeholder="Enter User ID">
+    <button id="btnSearch">Display</button>
+    <button id="btnAll">Load All Users</button>
+    <div id="singleUser"></div>
+    <div id="allUsers"></div>
+    <script>
+        $(document).ready(function () {
+            $("#btnSearch").click(function () {
+                let id = $("#userId").val();
+                if (id === "") {
+                    $("#singleUser").html("<p style='color:red;'>Enter Valid Id!</p>");
+                    return;
+                }
+                $.ajax({
+                    url: `https://dummyjson.com/users/${id}`,
+                    method: "GET",
+                    success: function (user) {
+                        $("#singleUser").html(`
+                            <h3>User Details</h3>
+                            <p><strong>Id:</strong> ${user.id}</p>
+                            <p><strong>First Name:</strong> ${user.firstName}</p>
+                            <p><strong>Last Name:</strong> ${user.lastName}</p>
+                            <img src="${user.image}" width="120">
+                        `);
+                    },
+                    error: function () {
+                        $("#singleUser").html("<p style='color:red;'>User not found!</p>");
+                    }
+                })
+            })
+            $("#btnAll").click(function () {
+
+                $.ajax({
+                    url: "https://dummyjson.com/users",
+                    method: "GET",
+                    success: function (response) {
+                        $("#allUsers").empty();
+
+                        response.users.forEach(user => {
+                            $("#allUsers").append(`
+                                <div style="margin:10px; border:1px solid #ccc; padding:10px; width:200px;">
+                                    <p><strong>Id:</strong> ${user.id}</p>
+                                    <p><strong>First Name:</strong> ${user.firstName}</p>
+                                    <p><strong>Last Name:</strong> ${user.lastName}</p>
+                                    <img src="${user.image}" width="120">
+                                </div>
+                            `);
+                        });
+                    }
+                });
+            });
+
+        });
+
+    </script>
+</body>
+</html>

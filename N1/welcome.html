@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Welcome</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<h2 id="msg"></h2>
+<script>
+$(document).ready(function(){
+    let params = new URLSearchParams(window.location.search);
+    let username = params.get("user");
+
+    $("#msg").html("Welcome " + username);
+});
+</script>
+
+</body>
+</html>

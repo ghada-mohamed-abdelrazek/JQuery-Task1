@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+<head>
+    <title>Assignments (1)</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        /* General */
+        body{
+            padding:20px;
+        }
+        section{
+            margin-bottom:30px; 
+            padding:12px; 
+            border:1px solid #ddd; 
+            border-radius:6px;
+        }
+
+        /* 1A */
+        #boxA{ 
+            width:150px; 
+            height:80px; 
+            background:#eee; 
+            margin-top:10px; 
+        }
+        /* 1B */
+        #boxB{
+        width:100px;
+        height:100px;
+        background:blue;
+        color:#fff;
+        text-align:center;
+        line-height:100px;
+        margin-top:10px;
+        transition: width .25s;
+        }
+        .big{
+        width:200px !important;
+        background:red !important;
+        }
+        /* 1C Smiley */
+        #smile{ 
+            width:120px; 
+            display:block; 
+            margin-top:10px; 
+            cursor:pointer; 
+        }
+        /* 1D Login */
+        .form-row{ 
+            margin:6px 0; 
+        }
+        span.status{ 
+            margin-left:8px; 
+            font-weight:bold; 
+        }
+        /* 1E Fade image */
+        #pic{ 
+            display:block; 
+            margin-top:10px; 
+            width:150px; 
+        }
+        /* 1F Tiger */
+        #stage{ 
+            position:relative; 
+            height:150px; 
+            border:1px dashed #ccc; 
+            overflow:hidden; 
+            margin-top:10px; 
+        }
+        #tiger{ 
+            position:absolute;
+            left: calc(100% - 160px); 
+            top:10px; width:150px; 
+            cursor:pointer; 
+        }
+    </style>
+</head>
+<body>
+    <!-- 1A -->
+    <section id="partA">
+        <h2>A-Apply CSS on Button Click</h2>
+        <button id="btnCss">Apply</button>
+        <div id="boxA"></div>
+    </section>
+    <!-- 1B -->
+    <section id="partB">
+        <h2>1B - Toggle width & background on mouseover</h2>
+        <div id="boxB"></div>
+    </section>
+    <!-- 1C -->
+    <section id="partC">
+        <h2>C-Smiley To Sad</h2>
+        <img id="smile" src="smile.png" alt="smile image">
+    </section>
+    <!-- 1D -->
+    <section id="partD">
+        <h2>D-Login validation & redirect (using jQuery only)</h2>
+        <form id="myForm">
+            User Name: 
+            <input type="text" id="uname">
+            <span id="uMsg"></span>
+            <br><br>
+
+            Password: 
+            <input type="password" id="pass">
+            <span id="pMsg"></span>
+            <br><br>
+
+            <input type="submit" value="Login">
+        </form>
+    </section>
+    <!-- 1E -->
+    <section id="partE">
+        <h2>E-Fade Image In/Out with one button</h2>
+        <button id="fadeBtn">Fade In / Out</button>
+        <img id="pic" src="smile.png" alt="pic">
+    </section>
+    <!-- 1F -->
+    <section id="partF">
+        <h2>F-Tiger walks left to end and disappears</h2>
+        <div id="stage">
+        <img id="tiger" src="tiger.jpeg" alt="tiger">
+        </div>
+    </section>
+    <script>
+    $(document).ready(function(){
+    /* ----- 1A ----- */
+        $("#btnCss").click(function(){
+            $("#boxA").css({
+            "border": "3px solid red"
+            })
+        })
+        /* ----- 1B ----- */
+        $("#boxB").mouseover(function(){
+            $(this).toggleClass("big");
+        })
+        /* ----- 1C ----- */
+        var smileSrc = "smile.png";
+        var sadSrc = "sad.png";
+        $("#smile")
+            .on("mouseover click", function(){
+            $(this).attr("src", sadSrc);
+            })
+            .on("mouseout", function(){
+            $(this).attr("src", smileSrc);
+            })
+            .on("error", function(){
+            // if the image fails to load, show a message in console and replace with placeholder
+            console.warn("Image failed to load:", $(this).attr("src"));
+            $(this).attr("alt", "image not found");
+            // optionally set a fallback data URL or simple colored box (here we hide)
+            $(this).css({border:"1px solid #f00", background:"#f8d7da", width:"120px", height:"120px"}).hide().fadeIn(400);
+            })
+        /* ----- 1D ----- */
+        $("#uname").keyup(function(){
+            if($(this).val().length >= 3){
+                $("#uMsg").html("valid");
+            } else {
+                $("#uMsg").html("not valid");
+            }
+        });
+
+        $("#pass").keyup(function(){
+            if($(this).val().length >= 5){
+                $("#pMsg").html("valid");
+            } else {
+                $("#pMsg").html("not valid");
+            }
+        });
+        $("#myForm").submit(function(e){
+            e.preventDefault();
+            let user = $("#uname").val();
+            let pass = $("#pass").val();
+            if(user.length >= 3 && pass.length >= 5){
+                window.location.href = "welcome.html?user=" + user;
+            } else {
+                alert("Invalid inputs!");
+            }
+        })
+
+        /* ----- 1E ----- */
+        $("#fadeBtn").click(function(){
+            $("#pic").fadeToggle(800);
+        });
+        /* ----- 1F ----- */
+        $("#tiger").click(function(){
+            var $t = $(this);
+            var currentLeft = parseFloat($t.css("left")) || 0;
+            var distance = currentLeft + $t.outerWidth();
+            var speedPerPixel = 3; 
+            var duration = distance * speedPerPixel
+            $t.animate({ left: -$t.outerWidth() }, duration, "linear", function(){
+            $(this).fadeOut(400, function(){ $(this).remove()})
+            })
+        })
+    })
+    </script>
+
+</body>
+</html>
